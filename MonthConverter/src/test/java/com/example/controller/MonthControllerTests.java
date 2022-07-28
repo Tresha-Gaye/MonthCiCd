@@ -40,4 +40,24 @@ public class MonthControllerTests {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
+
+    @Test
+    public void shouldReturnMonthAbbreviationOnValidGetRequest() throws Exception {
+        String outputJson = "Sep";mockMvc.perform(
+                        get("/monthAbbreviation/9")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(outputJson));}
+
+    @Test
+    public void shouldReturn422ForInvalidMonthAbbreviationId() throws Exception {
+        mockMvc.perform(
+                        get("/monthAbbreviation/999")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
 }
